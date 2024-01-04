@@ -24,13 +24,10 @@ public class TSP {
             }
         }
 
-       Population newPop = new Population();
-       for(int i =0; i < numberOfCities; i++){
-           System.out.println(newPop.pathsList.get(0).cities.get(i));
-       }
+        Population newPop = new Population();
+        newPop.print();
+
     }
-
-
 
     static int manhattanDistance(City city1, City city2) {
         return Math.abs(city1.x - city1.y) + Math.abs(city2.x - city2.y);

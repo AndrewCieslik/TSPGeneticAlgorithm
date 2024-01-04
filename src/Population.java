@@ -11,4 +11,15 @@ public class Population {
             pathsList.add(newPath);
         }
     }
+
+    void print(){
+        for (int pathNum = 0; pathNum < TSP.populationSize; pathNum++) {
+            for (int i = 0; i < TSP.numberOfCities; i++) {
+                System.out.print(pathsList.get(pathNum).cities.get(i) + "-");
+            }
+            System.out.println("");
+        }
+    }
+
+
 }
