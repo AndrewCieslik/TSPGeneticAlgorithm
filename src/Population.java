@@ -2,13 +2,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Population {
-    List<Path> paths;
+    List<Path> pathsList;
 
     public Population() {
-        this.paths = new ArrayList<>();
+        this.pathsList = new ArrayList<>();
         for (int i = 0; i < TSP.populationSize; i++) {
             Path newPath = new Path();
-            paths.add(newPath);
+            pathsList.add(newPath);
         }
     }
 }

@@ -26,9 +26,8 @@ public class TSP {
 
        Population newPop = new Population();
        for(int i =0; i < numberOfCities; i++){
-           System.out.print(newPop.paths.get(0).path.get(i) + "-");
+           System.out.println(newPop.pathsList.get(0).cities.get(i));
        }
-       System.out.println(newPop.paths.get(0).length());
     }
 
 
