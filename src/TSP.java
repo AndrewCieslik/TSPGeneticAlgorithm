@@ -6,7 +6,7 @@ import java.util.*;
 public class TSP {
     static int numberOfCities = 0;
     static Random random = new Random();
-    static int populationSize = 10;
+    static int populationSize = 1;
     static int generations = 18;
     static double mutationProb = 0.9;
     static List<City> cities;
@@ -15,7 +15,7 @@ public class TSP {
     public static void main(String[] args) {
 
         cities = readCitiesFromFile("bier127.tsp");
-        numberOfCities = 6;
+        numberOfCities = 5;
 
         distanceMatrix = new int[numberOfCities][numberOfCities];
         for (int i = 0; i < numberOfCities; i++) {
@@ -26,13 +26,17 @@ public class TSP {
 
         Population newPop = new Population();
         System.out.println(newPop.pathsList.get(0).cities);
+        System.out.println(newPop.pathsList.get(0).length());
+
         newPop.pathsList.get(0).mutation2opt();
         System.out.println("Mutation");
         System.out.println(newPop.pathsList.get(0).cities);
+        System.out.println(newPop.pathsList.get(0).length());
+
     }
 
     static int manhattanDistance(City city1, City city2) {
-        return Math.abs(city1.x - city1.y) + Math.abs(city2.x - city2.y);
+        return Math.abs(city2.x - city1.x) + Math.abs(city2.y - city1.y);
     }
 
     static List<List<Integer>> selection(List<List<Integer>> population, List<Double> fitnessScores) {
