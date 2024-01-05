@@ -11,11 +11,14 @@ public class TSP {
     static double mutationProb = 0.9;
     static List<City> cities;
     static int[][] distanceMatrix;
+    static long startTime = System.currentTimeMillis();
+    static long duration = 1 * 10 * 1000;
+
 
     public static void main(String[] args) {
 
         cities = readCitiesFromFile("bier127.tsp");
-        numberOfCities = 5;
+        numberOfCities = cities.size();
 
         distanceMatrix = new int[numberOfCities][numberOfCities];
         for (int i = 0; i < numberOfCities; i++) {
@@ -23,15 +26,42 @@ public class TSP {
                 distanceMatrix[i][j] = manhattanDistance(cities.get(i), cities.get(j));
             }
         }
-
         Population newPop = new Population();
-        System.out.println(newPop.pathsList.get(0).cities);
-        System.out.println(newPop.pathsList.get(0).length());
+        Population tempPop = new Population();
+        Population bestPop = new Population();
+        int newLength = 0;
+        int tempLength = 0;
+        int bestLength = 0;
+        int worstLength = 0;
 
-        newPop.pathsList.get(0).mutation2opt();
-        System.out.println("Mutation");
-        System.out.println(newPop.pathsList.get(0).cities);
-        System.out.println(newPop.pathsList.get(0).length());
+        while (System.currentTimeMillis() - startTime < duration) {
+            newPop.crossingOX();
+        }
+//
+//            System.out.println("NewPop: " + newPop.pathsList.get(0).length());
+//            newLength = newPop.pathsList.get(0).length();
+//
+//            tempPop = tempPop.copy(newPop);
+//            tempPop.pathsList.get(0).mutation2opt();
+//            System.out.println("Mutation");
+//
+//            System.out.println("tempPop: " + tempPop.pathsList.get(0).length());
+//            tempLength = tempPop.pathsList.get(0).length();
+//
+//            if (tempLength < newLength) { //mutacja polepszyla
+//                bestLength = tempLength;
+//                newPop = newPop.copy(tempPop);
+//            }
+//            if (worstLength < tempLength) {
+//                worstLength = tempLength;
+//            }
+//            if (worstLength < newLength) {
+//                worstLength = newLength;
+//            }
+////        }
+//            System.out.println("Best: " + bestLength);
+//            System.out.println("Worst: " + worstLength);
+//        }
 
     }
 

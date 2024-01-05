@@ -44,7 +44,6 @@ public class Path {
             System.out.println("A:" + nodeA + " B:" + nodeB + " C:" + nodeC + " D:" + nodeD);
         } while (nodeB >= nodeC);
 
-
         List<Integer> pathFromFirstToNodeA = cities.subList(0, nodeB);
         List<Integer> pathFromCtoB_reverse = cities.subList(nodeB, nodeD);
         Collections.reverse(pathFromCtoB_reverse);
