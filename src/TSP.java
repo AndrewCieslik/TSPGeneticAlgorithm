@@ -8,14 +8,14 @@ public class TSP {
     static Random random = new Random();
     static int populationSize = 10;
     static int generations = 18;
-    static double mutationRate = 0.1;
+    static double mutationProb = 0.9;
     static List<City> cities;
     static int[][] distanceMatrix;
 
     public static void main(String[] args) {
 
         cities = readCitiesFromFile("bier127.tsp");
-        numberOfCities = 2;
+        numberOfCities = 6;
 
         distanceMatrix = new int[numberOfCities][numberOfCities];
         for (int i = 0; i < numberOfCities; i++) {
@@ -25,8 +25,10 @@ public class TSP {
         }
 
         Population newPop = new Population();
-        newPop.print();
-
+        System.out.println(newPop.pathsList.get(0).cities);
+        newPop.pathsList.get(0).mutation2opt();
+        System.out.println("Mutation");
+        System.out.println(newPop.pathsList.get(0).cities);
     }
 
     static int manhattanDistance(City city1, City city2) {

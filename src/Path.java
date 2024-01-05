@@ -24,4 +24,39 @@ public class Path {
         length += TSP.distanceMatrix[lastCityIndex][0];
         return length;
     }
+
+    Path copy(Path path) {
+        Path copy = new Path();
+        copy.cities = new ArrayList<>(path.cities);
+        copy.lastCityIndex = path.lastCityIndex;
+        return copy;
+    }
+
+    void mutation2opt() {
+        Random random = new Random();
+        int nodeA, nodeB, nodeC, nodeD;
+
+        do {
+            nodeA = random.nextInt(lastCityIndex - 1);
+            nodeC = random.nextInt(lastCityIndex - 1);
+            nodeB = nodeA + 1;
+            nodeD = nodeC + 1;
+            System.out.println("A:" + nodeA + " B:" + nodeB + " C:" + nodeC + " D:" + nodeD);
+        } while (nodeB >= nodeC);
+
+
+        List<Integer> pathFromFirstToNodeA = cities.subList(0, nodeB);
+        List<Integer> pathFromCtoB_reverse = cities.subList(nodeB, nodeD);
+        Collections.reverse(pathFromCtoB_reverse);
+        List<Integer> pathFromDToLast = cities.subList(nodeD, cities.size());
+
+        List<Integer> mutatedPath = new ArrayList<>();
+        mutatedPath.addAll(pathFromFirstToNodeA);
+        mutatedPath.addAll(pathFromCtoB_reverse);
+        mutatedPath.addAll(pathFromDToLast);
+
+        cities.clear();
+        cities.addAll(mutatedPath);
+    }
+
 }
