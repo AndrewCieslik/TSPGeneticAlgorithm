@@ -44,21 +44,21 @@ public class Population {
     }
 
     void generateUniquePairs() {
-        List<Integer> cities = new ArrayList<>();
-        for (int i = 0; i < TSP.numberOfCities; i++) {
-            cities.add(i);
+        List<Integer> paths = new ArrayList<>();
+        for (int i = 0; i < TSP.populationSize; i++) {
+            paths.add(i);
         }
 
-        Collections.shuffle(cities);
+        Collections.shuffle(paths);
 
-        int endIndex = cities.size();
-        if (cities.size() % 2 != 0) {
+        int endIndex = paths.size();
+        if (paths.size() % 2 != 0) {
             endIndex--;
         }
 
         for (int i = 0; i < endIndex; i += 2) {
-            int key = cities.get(i);
-            int value = cities.get(i + 1);
+            int key = paths.get(i);
+            int value = paths.get(i + 1);
             parents.put(key, value);
         }
     }
