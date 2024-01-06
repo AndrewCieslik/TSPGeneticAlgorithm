@@ -6,9 +6,10 @@ import java.util.*;
 public class TSP {
     static int numberOfCities = 0;
     static Random random = new Random();
-    static int populationSize = 1;
+    static int populationSize = 2;
     static int generations = 18;
     static double mutationProb = 0.9;
+    static double crossingProb = 0.9;
     static List<City> cities;
     static int[][] distanceMatrix;
     static long startTime = System.currentTimeMillis();
@@ -18,7 +19,7 @@ public class TSP {
     public static void main(String[] args) {
 
         cities = readCitiesFromFile("bier127.tsp");
-        numberOfCities = cities.size();
+        numberOfCities = 10;
 
         distanceMatrix = new int[numberOfCities][numberOfCities];
         for (int i = 0; i < numberOfCities; i++) {
@@ -34,9 +35,9 @@ public class TSP {
         int bestLength = 0;
         int worstLength = 0;
 
-        while (System.currentTimeMillis() - startTime < duration) {
+        //while (System.currentTimeMillis() - startTime < duration) {
             newPop.crossingOX();
-        }
+        //}
 //
 //            System.out.println("NewPop: " + newPop.pathsList.get(0).length());
 //            newLength = newPop.pathsList.get(0).length();
