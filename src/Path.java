@@ -25,13 +25,6 @@ public class Path {
         return length;
     }
 
-    Path copy(Path path) {
-        Path copy = new Path();
-        copy.cities = new ArrayList<>(path.cities);
-        copy.lastCityIndex = path.lastCityIndex;
-        return copy;
-    }
-
     void mutation2opt() {
         Random random = new Random();
         int nodeA, nodeB, nodeC, nodeD;
@@ -41,7 +34,6 @@ public class Path {
             nodeC = random.nextInt(lastCityIndex - 1);
             nodeB = nodeA + 1;
             nodeD = nodeC + 1;
-            System.out.println("A:" + nodeA + " B:" + nodeB + " C:" + nodeC + " D:" + nodeD);
         } while (nodeB >= nodeC);
 
         List<Integer> pathFromFirstToNodeA = cities.subList(0, nodeB);
@@ -56,6 +48,12 @@ public class Path {
 
         cities.clear();
         cities.addAll(mutatedPath);
+    }
+
+    Path copy() {
+        Path newPath = new Path();
+        newPath.cities.addAll(cities);
+        return newPath;
     }
 
 }
