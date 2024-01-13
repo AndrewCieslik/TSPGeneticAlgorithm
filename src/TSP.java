@@ -1,24 +1,27 @@
 import java.io.BufferedReader;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.*;
 
 public class TSP {
     static int numberOfCities = 0;
-    static int populationSize = 20;
-    static int iterations = 2;
+    static int populationSize = 10000;
+    static int iterations = 10;
     static double mutationProb = 0.9;
     static double crossingProb = 0.9;
     static List<City> cities;
     static int[][] distanceMatrix;
-    static long startTime = System.currentTimeMillis();
+    static long startTime;
     static long duration = 1 * 20 * 1000;
 
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
 
         cities = readCitiesFromFile("bier127.tsp");
         numberOfCities = cities.size();
+        FileWriter writer = new FileWriter("results.txt");
+
 
         distanceMatrix = new int[numberOfCities][numberOfCities];
         for (int i = 0; i < numberOfCities; i++) {
@@ -26,19 +29,21 @@ public class TSP {
                 distanceMatrix[i][j] = manhattanDistance(cities.get(i), cities.get(j));
             }
         }
-        Population newPop = new Population();
-        newPop.print();
-        Population newGen;
 
-        //while (iterations > 0) {
-        while (System.currentTimeMillis() - startTime < duration) {
-           newGen = newPop.evolution();
-           newPop = newGen.copy();
-           newGen.print();
+        while (iterations > 0) {
+            Population newPop = new Population();
+            Population newGen;
+            startTime = System.currentTimeMillis();
+            while (System.currentTimeMillis() - startTime < duration) {
+                newGen = newPop.evolution();
+                newPop = newGen.copy();
+            }
+            writer.write(newPop.theBest());
+            System.out.println(newPop.theBest());
+            writer.write(System.lineSeparator());
+            iterations--;
         }
-
-        iterations--;
-        //}
+        writer.close();
     }
 
     static int manhattanDistance(City city1, City city2) {

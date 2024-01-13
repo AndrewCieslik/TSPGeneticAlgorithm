@@ -3,13 +3,14 @@ import java.util.*;
 public class Path {
     List<Integer> cities;
     int lastCityIndex;
+    Random random = new Random();
 
     public Path() {
         this.cities = new ArrayList<>();
         for (int i = 0; i < TSP.numberOfCities; i++) {
             cities.add(TSP.cities.get(i).index);
         }
-        Collections.shuffle(cities);
+        //Collections.shuffle(cities);
         this.lastCityIndex = cities.size() - 1;
     }
 
@@ -50,8 +51,22 @@ public class Path {
         cities.addAll(mutatedPath);
     }
 
+    void inversion_mutation(){
+        int minSegment = (int) (TSP.numberOfCities * 0.4);
+        int maxSegment = (int) (TSP.numberOfCities * 0.6);
+        int segmentSize = random.nextInt(maxSegment - minSegment + 1) + minSegment;
+        int firstIndexSegment = random.nextInt(cities.size() - segmentSize);
+        List<Integer> segment;
+        segment = cities.subList(firstIndexSegment, firstIndexSegment + segmentSize);
+        Collections.reverse(segment);
+        for (int i = 0; i < segmentSize; i++) {
+            cities.set(firstIndexSegment + i, segment.get(i));
+        }
+    }
+
     Path copy() {
         Path newPath = new Path();
+        newPath.cities.clear();
         newPath.cities.addAll(cities);
         return newPath;
     }

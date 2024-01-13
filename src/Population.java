@@ -82,7 +82,7 @@ public class Population {
 
     Population evolution() {
         //1.crossing:
-        int minSegment = (int) (TSP.numberOfCities * 0.1);
+        int minSegment = (int) (TSP.numberOfCities * 0.4);
         int maxSegment = (int) (TSP.numberOfCities * 0.6);
         int segmentSize = random.nextInt(maxSegment - minSegment + 1) + minSegment;
         int firstIndexSegment = random.nextInt(TSP.numberOfCities - segmentSize);
@@ -93,7 +93,6 @@ public class Population {
         int dad;
 
         Population duringEvoGen = new Population();
-        duringEvoGen.pathsList.clear();
 
         for (Integer key : parents.keySet()) {
             randomProb = Math.random();
@@ -103,9 +102,6 @@ public class Population {
             if (randomProb < TSP.crossingProb) {
                 duringEvoGen.pathsList.add(crossingOX(mom, dad, segmentSize, firstIndexSegment));
                 duringEvoGen.pathsList.add(crossingOX(dad, mom, segmentSize, firstIndexSegment));
-            } else {
-                duringEvoGen.pathsList.add(pathsList.get(mom));
-                duringEvoGen.pathsList.add(pathsList.get(dad));
             }
         }
 
@@ -113,10 +109,52 @@ public class Population {
         for (Path path : duringEvoGen.pathsList) {
             randomProb = Math.random();
             if (randomProb < TSP.mutationProb) {
-                path.mutation2opt();
+                path.inversion_mutation();
             }
         }
-        return duringEvoGen;
+        Population newGen = new Population();
+        newGen.pathsList.clear();
+
+
+        double sumInverseLength = 0;
+
+        for (Path path : duringEvoGen.pathsList) {
+            double length = path.length();
+            sumInverseLength += 1 / length;
+        }
+
+        Map<Path, Double> indivProbMap = new HashMap<>();
+        for (Path path : duringEvoGen.pathsList) {
+            double length = path.length();
+            double reversed_prob = (1 / length) / sumInverseLength;
+            indivProbMap.put(path, reversed_prob);
+        }
+
+        List<Path> elite = findElite(duringEvoGen);
+        duringEvoGen.pathsList.addAll(elite);
+
+        while (newGen.pathsList.size() < TSP.populationSize) {
+            double selectProb = Math.random();
+            for (Path path : indivProbMap.keySet()) {
+                if (selectProb < indivProbMap.get(path)) {
+                    newGen.pathsList.add(path);
+                    break;
+                }
+                selectProb -= indivProbMap.get(path);
+            }
+        }
+        return newGen;
+    }
+
+    List<Path> findElite(Population pop) {
+        List<Path> elite = new ArrayList<>();
+        int percent = 2;
+        pop.pathsList.sort(Comparator.comparingInt(Path::length));
+
+        int eliteCount = Math.max(1, (int) (pop.pathsList.size() * percent / 100.0));
+        elite.addAll(pop.pathsList.subList(0, eliteCount));
+
+        return elite;
     }
 
     Population copy() {
@@ -126,6 +164,19 @@ public class Population {
         return newPop;
     }
 
+    String theBest() {
+        int bestLength = 1000000;
+        Path bestPath = new Path();
+        bestPath.cities.clear();
+        for (int i = 0; i < TSP.populationSize; i++) {
+            int length = pathsList.get(i).length();
+            if (length < bestLength) {
+                bestLength = length;
+                bestPath = pathsList.get(i).copy();
+            }
+        }
+        return bestLength + " " + bestPath.cities;
+    }
 }
 
 
