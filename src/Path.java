@@ -10,19 +10,19 @@ public class Path {
         for (int i = 0; i < TSP.numberOfCities; i++) {
             cities.add(TSP.cities.get(i).index);
         }
-        //Collections.shuffle(cities);
+        Collections.shuffle(cities);
         this.lastCityIndex = cities.size() - 1;
     }
 
     int length() {
         int length = 0;
 
-        for (int i = 0; i < lastCityIndex; i++) {
-            int city1 = cities.get(i);
-            int city2 = cities.get(i + 1);
-            length += TSP.distanceMatrix[city1 - 1][city2 - 1];
+        for (int i = 0; i < cities.size() - 1; i++) {
+            int city1 = cities.get(i); //5
+            int city2 = cities.get(i + 1); //10
+            length += TSP.distanceMatrix[city1][city2];
         }
-        length += TSP.distanceMatrix[lastCityIndex][0];
+        length += TSP.distanceMatrix[cities.size() - 1][cities.get(0)];
         return length;
     }
 
@@ -51,7 +51,7 @@ public class Path {
         cities.addAll(mutatedPath);
     }
 
-    void inversion_mutation(){
+    void inversion_mutation() {
         int minSegment = (int) (TSP.numberOfCities * 0.4);
         int maxSegment = (int) (TSP.numberOfCities * 0.6);
         int segmentSize = random.nextInt(maxSegment - minSegment + 1) + minSegment;
@@ -68,7 +68,7 @@ public class Path {
         Path newPath = new Path();
         newPath.cities.clear();
         newPath.cities.addAll(cities);
+
         return newPath;
     }
-
 }

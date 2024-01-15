@@ -6,14 +6,14 @@ import java.util.*;
 
 public class TSP {
     static int numberOfCities = 0;
-    static int populationSize = 10000;
+    static int populationSize = 1000;
     static int iterations = 10;
     static double mutationProb = 0.9;
     static double crossingProb = 0.9;
     static List<City> cities;
     static int[][] distanceMatrix;
     static long startTime;
-    static long duration = 1 * 20 * 1000;
+    static long duration = 1 * 30 * 1000;
 
 
     public static void main(String[] args) throws IOException {
@@ -22,11 +22,11 @@ public class TSP {
         numberOfCities = cities.size();
         FileWriter writer = new FileWriter("results.txt");
 
-
-        distanceMatrix = new int[numberOfCities][numberOfCities];
-        for (int i = 0; i < numberOfCities; i++) {
-            for (int j = 0; j < numberOfCities; j++) {
-                distanceMatrix[i][j] = manhattanDistance(cities.get(i), cities.get(j));
+        distanceMatrix = new int[numberOfCities + 1][numberOfCities + 1];
+        distanceMatrix[0][0] = 0;
+        for (int i = 1; i <= numberOfCities; i++) {
+            for (int j = 1; j <= numberOfCities; j++) {
+                distanceMatrix[i][j] = manhattanDistance(cities.get(i - 1), cities.get(j - 1));
             }
         }
 
