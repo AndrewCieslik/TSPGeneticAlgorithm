@@ -84,12 +84,9 @@ public class Population {
 
     List<Path> findElite(Population pop) {
         List<Path> elite = new ArrayList<>();
-        int percent = 20;
         pop.pathsList.sort(Comparator.comparingInt(Path::length));
-
-        int eliteCount = Math.max(1, (int) (pop.pathsList.size() * percent / 100.0));
+        int eliteCount = Math.max(1, (int) (pop.pathsList.size() * TSP.elitePercent / 100.0));
         elite.addAll(pop.pathsList.subList(0, eliteCount));
-
         return elite;
     }
 

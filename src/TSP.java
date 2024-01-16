@@ -14,6 +14,7 @@ public class TSP {
     static int[][] distanceMatrix;
     static long startTime;
     static long duration = 1 * 60 * 1000;
+    static int elitePercent = 25;
 
     static void run(String fileName, String resultFile, int iterations) throws IOException {
         cities = readCitiesFromFile(fileName);
