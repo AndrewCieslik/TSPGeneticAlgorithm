@@ -1,6 +1,6 @@
 import java.util.Collections;
 
-public class SCXCrossing implements Crossing {
+public class SCXCrosser implements Crosser {
     public Path cross(Path mom, Path dad) {
         Path child = new Path();
         child.cities.clear();
@@ -8,7 +8,6 @@ public class SCXCrossing implements Crossing {
         Collections.sort(sorted.cities);
 
         child.cities.add(mom.cities.get(0));
-        //P1: (1, 5, 7, 3, 6, 4, 2) and P2: (1, 6, 2, 4, 3, 5, 7)
         for (int i = 1; i < TSP.numberOfCities; i++) {
             int previousCity = child.cities.get(i - 1);
             int momPreviousCityIndex = mom.cities.indexOf(previousCity);
@@ -24,8 +23,6 @@ public class SCXCrossing implements Crossing {
                 }
             }
             int dadCity = dad.cities.get((dadPreviousCityIndex + 1) % TSP.numberOfCities);
-            //AmodB A<B = A
-            //AmodB A=B =0;
             if (child.cities.contains(dadCity)) {
                 for (int j = 0; j < sorted.length(); j++) {
                     if (!child.cities.contains(sorted.cities.get(j))) {

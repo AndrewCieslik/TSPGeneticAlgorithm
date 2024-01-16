@@ -13,8 +13,7 @@ public class TSP {
     static List<City> cities;
     static int[][] distanceMatrix;
     static long startTime;
-    static long duration = 1 * 30 * 1000;
-
+    static long duration = 1 * 60 * 1000;
 
     public static void main(String[] args) throws IOException {
 

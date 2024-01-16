@@ -4,8 +4,8 @@ public class Population {
     static Random random = new Random();
     List<Path> pathsList;
     HashMap<Integer, Integer> parents;
-    Crossing crossing;
-
+    Crosser crosser;
+    Mutator mutator;
 
     public Population() {
         this.pathsList = new ArrayList<>();
@@ -14,7 +14,8 @@ public class Population {
             pathsList.add(newPath);
         }
         this.parents = new HashMap<>();
-        this.crossing = new SCXCrossing();
+        this.crosser = new SCXCrosser();
+        this.mutator = new Opt2Mutator();
     }
 
     void print() {
@@ -24,24 +25,20 @@ public class Population {
         }
     }
 
-
     Population evolution() {
-
+        Population duringEvoGen = new Population();
         double randomProb;
         int mom;
         int dad;
-
-        Population duringEvoGen = new Population();
-
         for (Path path : pathsList) {
             randomProb = Math.random();
             mom = random.nextInt(TSP.cities.size());
             do {
                 dad = random.nextInt(TSP.cities.size());
-            } while (dad != mom);
+            } while (dad == mom);
 
             if (randomProb < TSP.crossingProb) {
-                duringEvoGen.pathsList.add(crossing.cross(pathsList.get(mom), pathsList.get(dad)));
+                duringEvoGen.pathsList.add(crosser.cross(pathsList.get(mom), pathsList.get(dad)));
             }
         }
 
@@ -49,14 +46,12 @@ public class Population {
         for (Path path : duringEvoGen.pathsList) {
             randomProb = Math.random();
             if (randomProb < TSP.mutationProb) {
-                //path.inversion_mutation();
-                path.mutation2opt();
+                mutator.mutate(path);
             }
         }
+
         Population newGen = new Population();
         newGen.pathsList.clear();
-
-
         double sumInverseLength = 0;
 
         for (Path path : duringEvoGen.pathsList) {

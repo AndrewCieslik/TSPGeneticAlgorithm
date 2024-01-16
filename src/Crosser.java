@@ -1,3 +1,3 @@
-public interface Crossing {
+public interface Crosser {
     Path cross(Path mom, Path dad);
 }

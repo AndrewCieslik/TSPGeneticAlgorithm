@@ -1,6 +1,6 @@
 import java.util.Random;
 
-public class OXCrossing implements Crossing{
+public class OXCrosser implements Crosser {
     public Path cross(Path mom, Path dad) {
         Random random = new Random();
         int minSegment = (int) (TSP.numberOfCities * 0.4);
@@ -42,5 +42,4 @@ public class OXCrossing implements Crossing{
         }
         return child;
     }
-
 }
