@@ -15,11 +15,10 @@ public class TSP {
     static long startTime;
     static long duration = 1 * 60 * 1000;
 
-    public static void main(String[] args) throws IOException {
-
-        cities = readCitiesFromFile("bier127.tsp");
+    static void run(String fileName, String resultFile, int iterations) throws IOException {
+        cities = readCitiesFromFile(fileName);
         numberOfCities = cities.size();
-        FileWriter writer = new FileWriter("results.txt");
+        FileWriter writer = new FileWriter(resultFile);
 
         distanceMatrix = new int[numberOfCities + 1][numberOfCities + 1];
         distanceMatrix[0][0] = 0;
@@ -43,6 +42,11 @@ public class TSP {
             iterations--;
         }
         writer.close();
+    }
+
+    public static void main(String[] args) throws IOException {
+        TSP.run("bier127.tsp", "resultsBier.txt", iterations);
+        TSP.run("pr144.tsp", "resultPr.txt", iterations);
     }
 
     static int manhattanDistance(City city1, City city2) {
