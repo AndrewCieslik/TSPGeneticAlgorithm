@@ -16,6 +16,11 @@ public class TSP {
     static long duration = 1 * 60 * 1000;
     static int elitePercent = 25;
 
+    public static void main(String[] args) throws IOException {
+        TSP.run("bier127.tsp", "resultsBier.txt", iterations);
+        TSP.run("pr144.tsp", "resultPr.txt", iterations);
+    }
+
     static void run(String fileName, String resultFile, int iterations) throws IOException {
         cities = readCitiesFromFile(fileName);
         numberOfCities = cities.size();
@@ -43,11 +48,6 @@ public class TSP {
             iterations--;
         }
         writer.close();
-    }
-
-    public static void main(String[] args) throws IOException {
-        TSP.run("bier127.tsp", "resultsBier.txt", iterations);
-        TSP.run("pr144.tsp", "resultPr.txt", iterations);
     }
 
     static int manhattanDistance(City city1, City city2) {

@@ -27,6 +27,7 @@ public class Population {
 
     Population evolution() {
         Population duringEvoGen = new Population();
+        //1.Crossing
         double randomProb;
         int mom;
         int dad;
