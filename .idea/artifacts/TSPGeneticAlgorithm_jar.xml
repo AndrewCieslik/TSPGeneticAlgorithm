@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="TSPGeneticAlgorithm:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/TSPGeneticAlgorithm_jar</output-path>
+    <root id="archive" name="TSPGeneticAlgorithm.jar">
+      <element id="module-output" name="TSPGeneticAlgorithm" />
+    </root>
+  </artifact>
+</component>
