@@ -3,6 +3,7 @@ import java.util.*;
 public class Path {
     List<Integer> cities;
 
+
     public Path() {
         this.cities = new ArrayList<>();
         for (int i = 0; i < TSP.numberOfCities; i++) {

@@ -99,6 +99,7 @@ public class Population {
     }
 
     String theBest() {
+        String path = "";
         int bestLength = 1000000;
         Path bestPath = new Path();
         bestPath.cities.clear();
@@ -109,7 +110,10 @@ public class Population {
                 bestPath = pathsList.get(i).copy();
             }
         }
-        return bestLength + " " + bestPath.cities;
+        for (int i = 0; i < bestPath.cities.size(); i++) {
+            path += bestPath.cities.get(i) + " ";
+        }
+        return path + bestLength;
     }
 }
 
